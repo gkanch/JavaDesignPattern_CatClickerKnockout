@@ -1,30 +1,11 @@
-var Cat = function() {
-	// *** Observable Array ***
-	this.nicknamesArray = ko.observableArray([
-		{ name: "Alpha", id: 121},
-		{ name: "beta", id: 122},
-		{ name: "Mega", id: 123},
-		{ name: "Theta", id: 124},
-		{ name: "Omega", id: 125}
-	]);
-
-	// *** Observables ***
-	this.clickCount = ko.observable(0);
-	this.name = ko.observable('Tabby');
-	this.imgSrc = ko.observable('img/434164568_fea0ad4013_z.jpg');
-	this.imgAttribution = ko.observable('');
+var Cat = function(data) {
 	
-		/*clickCounter++;
-		var clickCounter = 0;
-		if (clickCounter > 30) {
-			this.level('young adult');
-		} 
-		else if (clickCounter > 20) {
-			this.level('teen');
-		}
-		else if (clickCounter > 10) {
-			this.level('baby');
-		}*/
+	// *** Observables & Observable Array ***
+	this.clickCount = ko.observable(data.clickCount);
+	this.name = ko.observable(data.name);
+	this.imgSrc = ko.observable(data.imgSrc);
+	this.imgAttribution = ko.observable(data.imgAttribution);
+	this.nicknamesArray = ko.observableArray(data.nicknames);
 	
 	this.title = ko.computed(function() {
 		var title = null;
@@ -47,10 +28,22 @@ var Cat = function() {
 }
 
 var ViewModel = function() {
-	this.currentCat = ko.observable( new Cat());
+	var self = this; /* self points to ViewModel */
+	
+	this.currentCat = ko.observable( new Cat({
+		clickCount: 0,
+		name: 'Tabby',
+		imgSrc: 'img/434164568_fea0ad4013_z.jpg',
+		imgAttribution: 'https://www.flickr.com/...',
+		nicknames: [
+			{ name: 'Tabtab', id: 121 },
+			{ name: 'T-bone', id: 122 },
+			{ name: 'Mr. T', id: 123}
+		]
+	}) );
 	
 	this.incrementCounter = function() {
-		this.currentCat().clickCount(this.currentCat().clickCount() + 1);
+		self.currentCat().clickCount(self.currentCat().clickCount() + 1);
 	};
 }
 
