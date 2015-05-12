@@ -56,8 +56,8 @@ var initialCats = [
 var Cat = function(data) {
 	
 	// *** Observables & Observable Array ***
-	this.name = ko.observable(data.name);
 	this.imgSrc = ko.observable(data.imgSrc);
+	this.name = ko.observable(data.name);
 	//this.imgAttribution = ko.observable(data.imgAttribution);
 	this.clickCount = ko.observable(data.clickCount);
 	this.nicknamesArray = ko.observableArray(data.nicknames);
@@ -96,8 +96,18 @@ var ViewModel = function() {
 	this.currentCat = ko.observable( this.catList()[0] );
 	
 	this.incrementCounter = function() {
-		self.currentCat().clickCount(self.currentCat().clickCount() + 1);
+		var previousCount = self.currentCat().clickCount();
+		self.currentCat().clickCount(previousCount + 1);
 	};
+	
+	this.setCat = function(clickedCat) {
+		console.log(clickedCat.name());
+		self.currentCat(clickedCat);
+	};
+	
+	/*this.updateCurrentCat = function() {
+		this.currentCat = ko.observable(  );
+	};*/
 }
 
 ko.applyBindings(new ViewModel());
